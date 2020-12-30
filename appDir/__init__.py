@@ -44,12 +44,12 @@ def create_app(config_name):
     compress.init_app(app)
     mail.init_app(app)
 
-    with app.app_context():
-        assets.load_path = [
-            os.path.join(os.path.dirname(__file__), "static/js"),
-            os.path.join(os.path.dirname(__file__), "static/styles"),
-        ]
-        assetsModule.compile_assets(assets)
+    # with app.app_context():
+    #     assets.load_path = [
+    #         os.path.join(os.path.dirname(__file__), "static/js"),
+    #         os.path.join(os.path.dirname(__file__), "static/styles"),
+    #     ]
+    #     assetsModule.compile_assets(assets)
 
     # Registering blue prints
     from .auth import auth as auth_blueprint

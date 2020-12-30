@@ -33,6 +33,7 @@ class User(UserMixin, db.Model):
     confirmed_on = db.Column(db.DateTime)
     user_type = db.Column(db.String(128), index=True)
     # Types of users: Customer, Admin
+    timezone = db.Column(db.String(64), index = True)
 
     @staticmethod
     def make_unique_username(username):
@@ -111,7 +112,7 @@ class User(UserMixin, db.Model):
         return self.user_type == access_type
 
     def __repr__(self):
-        return "<User {}>".format(self.username)
+        return "<User {}>".format(self.first_name)
 
 
 @login.user_loader

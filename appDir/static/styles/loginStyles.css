@@ -1,17 +1,17 @@
-/* Total page */
+/* Total user view */
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
     scrollbar-width: thin;
-    scrollbar-color: black;
+    scrollbar-color: rgb(24, 23, 69) #F5F7F9;
 }
 
 *::-webkit-scrollbar{
     width: 8px;
     height: 5px;
-    background-color: white;
+    background-color: #F5F7F9;
 }
 
 *::-webkit-scrollbar-track{
@@ -21,8 +21,8 @@
 
 *::-webkit-scrollbar-thumb{
     border-radius: 5px;
-    background-color: black;
-    border: 2px solid white;
+    background-color: rgb(24, 23, 69);
+    border: 2px solid #F5F7F9;
 }
 
 *::-webkit-scrollbar-corner{
@@ -84,6 +84,42 @@ body{
     margin: 10px 10px;
 }
 
+.flash-msg{
+    background-color: rgb(200, 237, 255);
+    border: 1.5px solid rgb(3, 120, 139);
+    color: black;
+    margin: 10px 0px;
+    /* padding: 10px; */
+    border-radius: 3px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.flash-msg-modal-close{
+    font-size: 25px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.success{
+    background-color: rgb(200, 255, 203);
+    border: 1.5px solid rgb(8, 172, 3);
+}
+
+.warning{
+    background-color: rgb(255, 251, 200);
+    border: 1.5px solid rgb(243, 239, 11);
+}
+
+.danger{
+    background-color: rgb(255, 200, 200);
+    border: 1.5px solid rgb(252, 27, 27);
+}
+
 .form-container{
     background-color: #3F87D9;
     padding: 40px;
@@ -97,6 +133,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     color: white;
+    min-width: 250px;
 }
 
 .form-title{
@@ -175,7 +212,7 @@ body{
 .login-btn{
     border: 4px solid #2cca94;
     background-color: #2cca94;
-    color: #2f2f42;
+    color: white;
     letter-spacing: 0.5px;
 }
 

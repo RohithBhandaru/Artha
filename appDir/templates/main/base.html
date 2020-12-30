@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/userStyles.css') }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+
+        {% if title %}
+            <title>{{ title }} - Artha</title>
+        {% else %}
+            <title>Welcome to Artha - Your Personal Finance Platform!</title>
+        {% endif %}
+    </head>
+
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/static/js/moment.min.js"></script>
+        <script src="/static/js/moment-timezone-with-data-1970-2030.min.js"></script>
+
+        <div class="page-container">
+            <div class="sidenav">
+                <div>
+                    <div class="logo" style="font-size: 32px;">
+                        A₹THA
+                    </div>
+
+                    <div class="links">
+                        <div class="snav-link" id="snav-1">
+                            <a href="{{ url_for('main.summary') }}">
+                                <img src="{{ url_for('static', filename = 'icons/portfolio.svg') }}"
+                                    alt="Facility Overview" width="18" height="18" align="middle"
+                                    style="margin: 0px 10px 0px 20px">
+                                Portfolio
+                            </a>
+                        </div>
+
+                        <div class="snav-link" id="snav-2">
+                            <a href="{{ url_for('main.summary') }}">
+                                <img src="{{ url_for('static', filename = 'icons/user.svg') }}" alt="Profile" width="18" height="18" align="middle" style="margin: 0px 12px 0px 18px">
+                                Profile
+                            </a>
+                        </div>
+
+                        <div class="snav-link" id="snav-3">
+                            <a href="{{ url_for('auth.logout') }}">
+                                <img src="{{ url_for('static', filename = 'icons/logout.svg') }}" alt="Log Out" width="18" height="18" align="middle" style="margin: 0px 10px 0px 20px">
+                                Log Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="topnav">
+                    <div id="topnav-title">
+                        Your Money
+                    </div>
+                </div>
+
+                <div class="nav-modal">
+                    <div class="nav-modal-container">
+                        <div class="nav-modal-content"></div>
+                    </div>
+                </div>
+
+                <div class="main-content-container">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var snavid = "{{ snavid | safe }}";
+            $(document).ready(function () {
+                $('#{{ snavid }}').addClass('snav-select')
+            })
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,109 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<div class="data-type-container">
+    <div class="data-type-title">
+        <div>
+            Daily Transactions <span id="txn-data-for">(for {{ data_for }})</span>
+        </div>
+
+        <form class="date-picker-form" id="monthly-categories" novalidate>
+            {{ form1.csrf_token }} 
+            {{form1.selectMonth(class_ = 'datepicker') }} 
+            {% if form1.errors %} 
+                {{form1.errors }} 
+            {% endif %} 
+            {{ form1.submit( class_ = "button submit-btn" ) }}
+        </form>
+    </div>
+
+    <div class="data-container">
+        <div class="summary-stats">
+            <div class="stats" id="stats-1">
+                <div class="stat-title">Income</div>
+
+                <div class="stat-num" id="txn-income">₹ {{ monthly_num["income"] | int }}</div>
+
+                <div class="stat-change">
+                    {% set income_per = '%0.1f'|format(monthly_num["income-mom-percent"]|abs) %}
+                    <div class="change-caret" id="txn-income-caret">
+                        {% if monthly_num["income-mom-percent"] >= 0 %}
+                            {% set color = "#00C013" %}
+                            <img src="{{ url_for('static', filename = 'icons/caret--up.svg') }}" alt="Increase" width="24" height="24" align="middle">
+                        {% else %}
+                            {% set color = "#C00000" %}
+                            <img src="{{ url_for('static', filename = 'icons/caret--down.svg') }}" alt="Increase" width="24" height="24" align="middle">
+                        {% endif %}
+                    </div>
+
+                    <div class="change-num" id="txn-income-percent"><span style="color: {{ color }};">{{ income_per }} %</span> MoM</div>
+                </div>
+            </div>
+
+            <div class="stats" id="stats-2">
+                <div class="stat-title">Expense</div>
+
+                <div class="stat-num" id="txn-expense">₹ {{ monthly_num["expense"] | int }}</div>
+
+                <div class="stat-change">
+                    {% set expense_per = '%0.1f'|format(monthly_num["expense-mom-percent"]|abs) %}
+                    <div class="change-caret" id="txn-expense-caret">
+                        {% if monthly_num["expense-mom-percent"] >= 0 %}
+                            {% set color = "#00C013" %}
+                            <img src="{{ url_for('static', filename = 'icons/caret--up.svg') }}" alt="Increase" width="24" height="24" align="middle">
+                        {% else %}
+                            {% set color = "#C00000" %}
+                            <img src="{{ url_for('static', filename = 'icons/caret--down.svg') }}" alt="Increase" width="24" height="24" align="middle">
+                        {% endif %}
+                    </div>
+
+                    <div class="change-num" id="txn-expense-percent"><span style="color: {{ color }};">{{ expense_per }} %</span> MoM</div>
+                </div>
+            </div>
+
+            <div class="support-links">
+                <div class="support-link">
+                    <a href="{{ url_for('main.summary') }}">
+                        <div style="width: 80%; display: flex; align-items: center;">
+                            <img src="{{ url_for('static', filename = 'icons/history.svg') }}"
+                                alt="History" width="18" height="18" align="middle"
+                                style="margin: 0px 10px">
+                            History
+                        </div>
+                        <img src="{{ url_for('static', filename = 'icons/chevron--right.svg') }}"
+                            alt="Link" width="18" height="18" align="middle"
+                            style="margin: 0px 10px">
+                    </a>
+                </div>
+
+                <div class="support-link">
+                    <a href="{{ url_for('main.summary') }}">
+                        <div style="width: 80%; display: flex; align-items: center;">
+                            <img src="{{ url_for('static', filename = 'icons/analytics.svg') }}"
+                                alt="Analytics" width="18" height="18" align="middle"
+                                style="margin: 0px 10px">
+                            Category Trends
+                        </div>
+                        <img src="{{ url_for('static', filename = 'icons/chevron--right.svg') }}"
+                            alt="Link" width="18" height="18" align="middle"
+                            style="margin: 0px 10px">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="data-graph-container">
+            <div class="d3-graph" id="graphDiv1"></div>
+        </div>
+
+        <script type="text/javascript">
+            var gDat1_e = {{ txn_E.graph_data | safe }};
+        </script>
+        <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsD3.js') }}"></script>
+        <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsD3Func.js') }}"></script>
+        <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsAjax.js') }}"></script>
+    </div>
+</div>
+
+{% endblock %}

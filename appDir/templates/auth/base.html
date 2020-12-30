@@ -3,12 +3,12 @@
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles/loginStyles.css') }}" />
         <script src="http://d3js.org/d3.v4.min.js"></script>
-        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% if title %}
-        <title>{{ title }} - Artha</title>
+            <title>{{ title }} - Artha</title>
         {% else %}
-        <title>Welcome to Artha - Your Personal Finance Platform!</title>
+            <title>Welcome to Artha - Your Personal Finance Platform!</title>
         {% endif %}
     </head>
 
@@ -29,10 +29,39 @@
                 </div>
             </div>
 
-            <div class="form-container">
-                <div class="form-box">
-                    {% block content %}
-                    {% endblock %}
+            <div style="display: flex;flex-direction: column; align-items: center;">
+                <div>
+                    <script>
+                        var modals = [];
+                        var modalCloses = [];
+                    </script>
+                    {% for message in get_flashed_messages(with_categories=True) %}
+                        {% if message %}
+                            <div class="flash-msg {{ message[0] }}" id="modal-{{ loop.index }}">
+                                <div style="padding: 10px;">{{ message[1] }}</div>
+                                <div class="flash-msg-modal-close" id="modal-close-{{ loop.index }}">&times;</div>
+                            </div>
+                        {% endif %}
+                        <script>
+                            modalCloses["{{ loop.index }}"] = document.querySelector("#modal-close-{{ loop.index }}");
+                            modals["{{ loop.index }}"] = document.querySelector("#modal-{{ loop.index }}");
+                
+                            function toggleModal(){
+                                modals["{{ loop.index }}"].parentNode.removeChild(modals["{{ loop.index }}"]);
+                            }
+                
+                            modalCloses["{{ loop.index }}"].addEventListener("click", toggleModal);
+                
+                        </script>
+                    {% endfor %}
+                </div>
+
+
+                <div class="form-container">
+                    <div class="form-box">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
