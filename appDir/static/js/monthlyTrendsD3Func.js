@@ -53,7 +53,6 @@ export function drawMonthlyTrendsD3(gData) {
         .style("opacity", 0);
 
     //Adding x, y axes and their titles
-    console.log(gData.length)
     g1.append("g")
         .attr("class", "x-axis")
         .attr("transform", "translate(0," + graphHeight1 + ")")

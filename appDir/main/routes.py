@@ -41,7 +41,7 @@ def summary():
 def monthlyTrends():
     if request.method == "POST":
         data = request.json['selectMonth']
-        monYr = dt.datetime.strptime(data, '%Y-%m-%d')
+        monYr = dt.datetime.strptime(data, '%Y-%m')
         monYr = dt.datetime(monYr.year, monYr.month, 1)
         
         local_tz = pytz.timezone(current_user.timezone)

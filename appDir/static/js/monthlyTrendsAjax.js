@@ -7,6 +7,7 @@ form.addEventListener("submit", async (e) => {
 
     var csrf_token = document.getElementById("csrf_token").value;
     var selectMonth = document.getElementById("selectMonth").value;
+    console.log(selectMonth)
 
     var formData = JSON.stringify({
         csrf_token: csrf_token,
@@ -36,7 +37,7 @@ form.addEventListener("submit", async (e) => {
             var color = "#C00000";
             drawTrianglePointerD3(color, "down", "txn-income-caret");
         }
-        document.getElementById("txn-income-percent").innerHTML = "<span style='color: " + color + ";'>" + Math.round(a["monthly_num"]["income-mom-percent"]) + " %</span> MoM";
+        document.getElementById("txn-income-percent").innerHTML = "<span class='change-number' style='color: " + color + ";'>" + Math.round(a["monthly_num"]["income-mom-percent"]) + " %</span> MoM";
 
         if(a["monthly_num"]["expense-mom-percent"] >= 0){
             var color = "#00C013";
@@ -46,7 +47,7 @@ form.addEventListener("submit", async (e) => {
             var color = "#C00000";
             drawTrianglePointerD3(color, "down", "txn-expense-caret");
         }
-        document.getElementById("txn-expense-percent").innerHTML = "<span style='color: " + color + ";'>" + Math.round(a["monthly_num"]["expense-mom-percent"]) + " %</span> MoM";
+        document.getElementById("txn-expense-percent").innerHTML = "<span class='change-number' style='color: " + color + ";'>" + Math.round(a["monthly_num"]["expense-mom-percent"]) + " %</span> MoM";
 
         drawMonthlyTrendsD3(JSON.parse(a["txn_E"]["graph_data"]));
     });
