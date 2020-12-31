@@ -197,17 +197,11 @@ body{
     padding: 0px 4%;
 }
 
-.level-1-container{
+.level-container{
     width: -webkit-fill-available; /*For webkit based browsers*/
     width: -moz-fill-available;    /*For mozilla based browsers*/
     display: flex;
-    flex-direction: row;
-}
-
-.data-type-container{
-    display: flex;
     flex-direction: column;
-    width: clamp(70%, 800px, 80%);
 }
 
 .data-type-title{
@@ -215,6 +209,10 @@ body{
     padding: 20px 0px 10px 0px;
     display: flex;
     justify-content: space-between;
+}
+
+#title-1{
+    width: clamp(70%, 800px, 80%);
 }
 
 #txn-data-for{
@@ -241,7 +239,6 @@ body{
     font-size: 15px;
     transition-duration: 0.4s;
     cursor: pointer;
-    margin: 0px 20px;
 }
 
 .submit-btn{
@@ -249,16 +246,23 @@ body{
     background-color: #05c012;
     color: white;
     letter-spacing: 0.5px;
+    margin-left: 20px;
 }
 
 .submit-btn:hover{
     box-shadow: 0 4px 16px 0 rgba(0,0,0,0.24),0 5px 5px 0 rgba(0,0,0,0.19);
 }
 
+.data-type-container{
+    display: flex;
+    flex-direction: row;
+}
+
 .data-container{
     background-color: white;
     border-radius: 10px;
     padding: 20px 0px;
+    width: clamp(70%, 800px, 80%);
 }
 
 .summary-stats{
@@ -355,13 +359,21 @@ div.tooltip {
 
 .banner{
     flex-grow: 100;
-    background-color: #e5def1;
-    margin: 60px 10px 0px 10px;
+    margin-left: 20px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px 20px;
+    height: 459px;
+}
+
+#banner-1{
+    background-color: #e5def1;
+}
+
+#banner-2{
+    background-color: #d6edda;
 }
 
 .banner-title{
@@ -390,4 +402,51 @@ div.tooltip {
 
 .banner-step img{
     margin: 0px 10%;
+}
+
+#level-2{
+    margin-top: 30px;
+}
+
+hr{
+    opacity: 40%;
+    width: 95%;
+    align-self: center;
+    border-width: 0;
+    height: 1px;
+    color: black;
+    background-color: grey;
+    margin: 2px 0px;
+}
+
+.mf-individual {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.mf-box {
+    align-items: flex-start;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.fund-name {
+    width: auto;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.mf-stat-num{
+    font-size: 14px;
+    padding: 10px 0px 5px 0px;
 }

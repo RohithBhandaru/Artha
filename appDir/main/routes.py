@@ -34,7 +34,10 @@ def summary():
     
     txn_E, txn_I, monthly_num = helper.getMonthlyTxnData(local_month_year, current_user)
     
-    return render_template('main/summary.html', title='Home', snavid = "snav-1", form1 = form1, txn_E = txn_E, monthly_num = monthly_num, data_for = data_for)
+    mfp = helper.getMFPortfolio(current_user, local_tz)
+    mf_full_data = helper.getFullMFData(current_user)
+    
+    return render_template('main/summary.html', title='Home', snavid = "snav-1", form1 = form1, txn_E = txn_E, monthly_num = monthly_num, data_for = data_for, mfp = mfp, mf_full_data = mf_full_data)
 
 @main.route('/monthlyTrends', methods = ['GET', 'POST'])
 @login_required

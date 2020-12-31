@@ -2,26 +2,26 @@
 
 {% block content %}
 
-<div class="level-1-container">
-    <div class="data-type-container">
-        <div class="data-type-title">
-            <div>
-                Daily Transactions <span id="txn-data-for">(for {{ data_for }})</span>
-            </div>
-
-            <form class="date-picker-form" id="monthly-categories" novalidate>
-                {{ form1.csrf_token }} 
-                {{form1.selectMonth(class_ = 'datepicker', type='month') }} 
-                {% if form1.errors %} 
-                    {{form1.errors }} 
-                {% endif %} 
-                {{ form1.submit( class_ = "button submit-btn" ) }}
-            </form>
+<div class="level-container" id="level-1">
+    <div class="data-type-title" id="title-1">
+        <div style="font-size: 20px; font-weight: 400;">
+            Daily Transactions <span id="txn-data-for">(for {{ data_for }})</span>
         </div>
 
+        <form class="date-picker-form" id="monthly-categories" novalidate>
+            {{ form1.csrf_token }} 
+            {{form1.selectMonth(class_ = 'datepicker', type='month') }} 
+            {% if form1.errors %} 
+                {{form1.errors }} 
+            {% endif %} 
+            {{ form1.submit( class_ = "button submit-btn" ) }}
+        </form>
+    </div>
+
+    <div class="data-type-container">
         <div class="data-container">
             <div class="summary-stats">
-                <div class="stats" id="stats-1">
+                <div class="stats" id="stats-11">
                     <div class="stat-title">Income</div>
 
                     <div class="stat-num" id="txn-income">₹ {{ monthly_num["income"] | int }}</div>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="stats" id="stats-2">
+                <div class="stats" id="stats-12">
                     <div class="stat-title">Expense</div>
 
                     <div class="stat-num" id="txn-expense">₹ {{ monthly_num["expense"] | int }}</div>
@@ -105,27 +105,170 @@
             <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsD3Func.js') }}"></script>
             <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsAjax.js') }}"></script>
         </div>
+
+        <div class="banner" id="banner-1">
+            <img src="{{ url_for('static', filename = 'icons/wallet.svg') }}" alt="Analytics" width="32" height="32" align="middle">
+            
+            <div class="banner-title">Your Wallet</div>
+    
+            <div class="banner-steps">
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/activity.svg') }}" alt="Analytics" width="22" height="22" align="middle">
+                    Track your spends
+                </div>
+    
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/money.svg') }}" alt="Money" width="22" height="22" align="middle">
+                    Save 'em
+                </div>
+    
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/increase-level.svg') }}" alt="Increase" width="22" height="22" align="middle">
+                    Watch 'em grow!
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="banner" id="banner-1">
-        <img src="{{ url_for('static', filename = 'icons/wallet.svg') }}" alt="Analytics" width="32" height="32" align="middle">
-        
-        <div class="banner-title">Your Wallet</div>
+    
+</div>
 
-        <div class="banner-steps">
-            <div class="banner-step">
-                <img src="{{ url_for('static', filename = 'icons/activity.svg') }}" alt="Analytics" width="22" height="22" align="middle">
-                Track your spends
+<div class="level-container" id="level-2">
+    <div class="data-type-title" id="title-2">
+        <div style="font-size: 20px; font-weight: 400;">
+            Mutual Funds <span id="txn-data-for">(as on {{ mfp.loc[0, 'As On Date'] }})</span>
+        </div>
+    </div>
+
+    <div class="data-type-container">
+        <div class="data-container">
+            <div class="summary-stats">
+                {% set total_invested = mfp['Total Investment'] | sum() | round | int %}
+                {% set current_value = mfp['Total Value'] | sum() | round | int %}
+                <div class="stats" id="stats-21">
+                    <div class="stat-title">Total Invested</div>
+
+                    <div class="stat-num" id="txn-income">₹ {{ total_invested }}</div>
+
+                    <div style="height: 24px"></div>
+                </div>
+
+                <div class="stats" id="stats-22">
+                    <div class="stat-title">Current Value</div>
+
+                    <div class="stat-num" id="txn-expense">₹ {{ current_value }}</div>
+
+                    <div style="height: 24px"></div>
+                </div>
+
+                <div class="stats" id="stats-23">
+                    <div class="stat-title">Total Returns</div>
+
+                    <div class="stat-num" id="txn-expense">₹ {{ current_value - total_invested }}</div>
+
+                    <div class="stat-change">
+                        {% set returns_per = (1 - (total_invested/current_value))*100 %}
+                        <div class="change-caret" id="mf-returns-caret">
+                            {% if returns_per >= 0 %}
+                                {% set color = "#00C013" %}
+                                <img src="{{ url_for('static', filename = 'icons/caret--up.svg') }}" alt="Increase" width="24" height="24" align="middle">
+                            {% else %}
+                                {% set color = "#C00000" %}
+                                <img src="{{ url_for('static', filename = 'icons/caret--down.svg') }}" alt="Increase" width="24" height="24" align="middle">
+                            {% endif %}
+                        </div>
+
+                        <div class="change-num" id="mf-returns-percent"><span  class="change-number" style="color: {{ color }};">{{ '%0.1f'|format(returns_per|abs) }} %</span> MoM</div>
+                    </div>
+                </div>
+
+                <div class="stats" id="stats-22">
+                    <div class="stat-title"># of Funds</div>
+
+                    <div class="stat-num" id="txn-expense">{{ mfp | length }}</div>
+
+                    <div style="height: 24px"></div>
+                </div>
             </div>
 
-            <div class="banner-step">
-                <img src="{{ url_for('static', filename = 'icons/money.svg') }}" alt="Money" width="22" height="22" align="middle">
-                Save 'em
+            <div class="data-graph-container">
+                <div class="d3-graph" id="graphDiv2"></div>
             </div>
 
-            <div class="banner-step">
-                <img src="{{ url_for('static', filename = 'icons/increase-level.svg') }}" alt="Increase" width="22" height="22" align="middle">
-                Watch 'em grow!
+            <script type="text/javascript">
+                var gDat2 = {{ mf_full_data.graph_data | safe }};
+            </script>
+            <script type="module" src="{{ url_for('static', filename='js/mfTrendsD3.js') }}"></script>
+            <script type="module" src="{{ url_for('static', filename='js/mfTrendsD3Func.js') }}"></script>
+
+            <div class="mf-individual">
+                {% for _, ii in mfp.iterrows() %}
+                    <hr/>
+                    <div class="mf-box">
+                        <div class="fund-name">{{ ii['Fund Name'] }}</div>
+                        <div class="summary-stats" style="padding: 10px 0px;">
+                            <div class="stats">
+                                <div class="stat-title" style="font-size: 13px;">Invested</div>
+                                <div class="mf-stat-num">₹ {{ ii['Total Investment']|int }}</div>
+                            </div>
+
+                            <div class="stats">
+                                <div class="stat-title" style="font-size: 13px;">Current Value</div>
+                                <div class="mf-stat-num">₹ {{ ii['Total Value']|int }}</div>
+                            </div>
+
+                            <div class="stats">
+                                <div class="stat-title" style="font-size: 13px;">Returns</div>
+
+                                {% if ii['P&L'] >= 0 %}
+                                    {% set color = "#00C013" %}
+                                {% else %}
+                                    {% set color = "#C00000" %}
+                                {% endif %}
+
+                                <div class="mf-stat-num" style="color: {{ color }}; font-weight: 700;">₹ {{ ii['P&L']|int }} ( {{ ii['P&L %']|round(1, 'floor') }} % )</div>
+                            </div>
+
+                            <div class="stats">
+                                <div class="stat-title" style="font-size: 13px;">Holding for</div>
+                                <div class="mf-stat-num">{{ moment(ii['Investing Since']).toNow(true) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="banner" id="banner-2">
+            <img src="{{ url_for('static', filename = 'icons/wallet.svg') }}" alt="Analytics" width="32" height="32" align="middle">
+            
+            <div class="banner-title">Your Wealth</div>
+    
+            <div class="banner-steps">
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/microscope.svg') }}" alt="Analytics" width="22" height="22" align="middle">
+                    Research
+                </div>
+
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/money.svg') }}" alt="Money" width="22" height="22" align="middle">
+                    Invest in 'em
+                </div>
+
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/time.svg') }}" alt="Analytics" width="22" height="22" align="middle">
+                    Stay put
+                </div>
+    
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/activity.svg') }}" alt="Analytics" width="22" height="22" align="middle">
+                    Track 'em
+                </div>
+    
+                <div class="banner-step">
+                    <img src="{{ url_for('static', filename = 'icons/increase-level.svg') }}" alt="Increase" width="22" height="22" align="middle">
+                    Watch 'em grow!
+                </div>
             </div>
         </div>
     </div>
