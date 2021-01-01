@@ -80,6 +80,45 @@ def getMonthlyTxnData(local_month_year, cUser):
     
     return dfData_e, dfData_i, current_month_num
 
+def getCategoriesList(catType, cUser):
+    categoryPl = [
+        {"$match": {"$and": [{"email": cUser.email}, {"category_type": catType}]}},
+        {"$project": {"category_name": "$category_name"}}
+        ]
+    
+    categories = list(mclient["artha"]["transaction_data"].aggregate(categoryPl))
+    categories = list(set([ii["category_name"] for ii in categories]))
+    categories.sort()
+    
+    return categories
+
+def getCatHistoryPl(category, cUser):
+    return [
+       {"$match": {"category_name": category, "email": cUser.email}},
+        {"$project": {"_id": "$_id", "date": "$date", "amount": "$amount"}},
+        {"$group": {"_id": {"month": {"$month": {"date": "$date", "timezone": cUser.timezone}}, "year": {"$year": {"date": "$date", "timezone": cUser.timezone}}}, "totAmount": {"$sum": "$amount"}, "numTxn": {"$sum": 1}}},
+        {"$sort": {"_id.year": 1, "_id.month": 1}}
+       ]
+
+def getCategoryHistoryData(category, cUser):
+    dat = list(mclient["artha"]["transaction_data"].aggregate(getCatHistoryPl(category, cUser)))
+    
+    sDate = dt.date(dat[0]['_id']['year'], dat[0]['_id']['month'], 1).strftime('%Y-%m-%d')
+    eDate = dt.date(dat[-1]['_id']['year'], dat[-1]['_id']['month'], 1).strftime('%Y-%m-%d')
+    monthrange = pd.date_range(sDate, eDate, freq='MS').tolist()
+    
+    dfDat = pd.DataFrame(0, columns = ['Amount', 'Number'], index = monthrange)
+    
+    for ii in range(len(dat)):
+        dfDat.loc[dt.datetime(dat[ii]['_id']['year'], dat[ii]['_id']['month'], 1)] = [dat[ii]['totAmount'], dat[ii]['numTxn']]
+    
+    dfDat['Month'] = dfDat.index.to_series().apply(lambda x: x.month)
+    dfDat['Year'] = dfDat.index.to_series().apply(lambda x: x.year)
+    dfDat = dfDat[['Month', 'Year', 'Amount', 'Number']]
+    dfDat = toJson(dfDat)
+    
+    return dfDat
+
 def getMFPortfolioPl(cUser):
     return [
         {"$match": {"$and": [{"email": cUser.email}, {"unit_balance": {"$ne": 0}}, {"events.amount": {"$ne": np.nan}}]}},

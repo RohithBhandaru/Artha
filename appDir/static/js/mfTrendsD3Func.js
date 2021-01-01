@@ -17,7 +17,7 @@ export function drawMFTrendsD3(gData){
     //Set dimensions of svg
     var margin = { top: 20, right: 20, bottom: 50, left: 50 };
     var svgWidth = 500;
-    var el = d3.select('#graphDiv2')['_groups'][0][0];
+    var el = d3.select('#graphDiv3')['_groups'][0][0];
     var svgWidth = el.offsetWidth;
     var svgHeight = 300;
     var graphWidth = svgWidth - margin.left - margin.right;
@@ -59,11 +59,11 @@ export function drawMFTrendsD3(gData){
                         .curve(d3.curveMonotoneX);
     
     //Clearing the canvas
-    document.getElementById("graphDiv2").innerHTML = "";
+    document.getElementById("graphDiv3").innerHTML = "";
 
     //Creating SVG canvas
     var svg = d3
-        .select("#graphDiv2")
+        .select("#graphDiv3")
         .append("svg")
         .attr("width", svgWidth)
         .attr("height", svgHeight)

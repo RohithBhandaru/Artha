@@ -65,32 +65,59 @@
 
                 <div class="support-links">
                     <div class="support-link">
-                        <a href="{{ url_for('main.summary') }}">
-                            <div style="width: 80%; display: flex; align-items: center;">
-                                <img src="{{ url_for('static', filename = 'icons/history.svg') }}"
-                                    alt="History" width="18" height="18" align="middle"
-                                    style="margin: 0px 10px">
-                                History
-                            </div>
-                            <img src="{{ url_for('static', filename = 'icons/chevron--right.svg') }}"
-                                alt="Link" width="18" height="18" align="middle"
+                        <div style="width: 80%; display: flex; align-items: center;">
+                            <img src="{{ url_for('static', filename = 'icons/history.svg') }}"
+                                alt="History" width="18" height="18" align="middle"
                                 style="margin: 0px 10px">
-                        </a>
+                            History
+                        </div>
+                        <img src="{{ url_for('static', filename = 'icons/chevron--right.svg') }}"
+                            alt="Link" width="18" height="18" align="middle"
+                            style="margin: 0px 10px">
                     </div>
 
-                    <div class="support-link">
-                        <a href="{{ url_for('main.summary') }}">
-                            <div style="width: 80%; display: flex; align-items: center;">
-                                <img src="{{ url_for('static', filename = 'icons/analytics.svg') }}"
-                                    alt="Analytics" width="18" height="18" align="middle"
-                                    style="margin: 0px 10px">
-                                Category Trends
-                            </div>
-                            <img src="{{ url_for('static', filename = 'icons/chevron--right.svg') }}"
-                                alt="Link" width="18" height="18" align="middle"
+                    <div class="support-link" id="modal-trigger-1">
+                        <div style="width: 80%; display: flex; align-items: center;">
+                            <img src="{{ url_for('static', filename = 'icons/analytics.svg') }}"
+                                alt="Analytics" width="18" height="18" align="middle"
                                 style="margin: 0px 10px">
-                        </a>
+                            Category Trends
+                        </div>
+                        <img src="{{ url_for('static', filename = 'icons/chevron--right.svg') }}"
+                            alt="Link" width="18" height="18" align="middle"
+                            style="margin: 0px 10px">
                     </div>
+
+                    <div class="modal" id="modal-1">
+                        <div class="modal-content-container" style="width: unset;">
+                            <div class="modal-content" id="modal-content-1">
+                                <div style="font-size: 18px; margin: 10px 0px;">Historical Category Trends</div>
+                                <form class="date-picker-form" id="category-history" novalidate>
+                                    {{ form2.csrf_token }} 
+                                    {{form2.selectCat(style="border-radius: 5px; padding: 5px 10px;") }} 
+                                    {% if form2.errors %} 
+                                        {{ form2.errors }} 
+                                    {% endif%} 
+                                    {{ form2.submit(class_ = "button submit-btn") }}
+                                </form>
+                                <div class="d3-graph" id="graphDiv2"></div>
+                            </div>
+                            <div class="modal-close" id="modal-close-1">&times;</div>
+                        </div>
+                    </div>
+            
+                    <script>
+                        var modal1 = document.querySelector("#modal-1");
+                        var modalTrigger1 = document.querySelector("#modal-trigger-1");
+                        var modalClose1 = document.querySelector("#modal-close-1");
+
+                        function toggleModal() {
+                            modal1.classList.toggle("show-modal");
+                        }
+
+                        modalTrigger1.addEventListener("click", toggleModal);
+                        modalClose1.addEventListener("click", toggleModal);
+                    </script>
                 </div>
             </div>
 
@@ -100,10 +127,14 @@
 
             <script type="text/javascript">
                 var gDat1_e = {{ txn_E.graph_data | safe }};
+                var gDat2 = {{ catD.graph_data | safe }};
             </script>
             <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsD3.js') }}"></script>
             <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsD3Func.js') }}"></script>
             <script type="module" src="{{ url_for('static', filename='js/monthlyTrendsAjax.js') }}"></script>
+            <script type="module" src="{{ url_for('static', filename='js/historicalCategoryTrendsD3.js') }}"></script>
+            <script type="module" src="{{ url_for('static', filename='js/historicalCategoryTrendsD3Func.js') }}"></script>
+            <script type="module" src="{{ url_for('static', filename='js/historicalCategoryTrendsAjax.js') }}"></script>
         </div>
 
         <div class="banner" id="banner-1">
@@ -119,7 +150,7 @@
     
                 <div class="banner-step">
                     <img src="{{ url_for('static', filename = 'icons/money.svg') }}" alt="Money" width="22" height="22" align="middle">
-                    Save 'em
+                    Save on 'em
                 </div>
     
                 <div class="banner-step">
@@ -192,11 +223,11 @@
             </div>
 
             <div class="data-graph-container">
-                <div class="d3-graph" id="graphDiv2"></div>
+                <div class="d3-graph" id="graphDiv3"></div>
             </div>
 
             <script type="text/javascript">
-                var gDat2 = {{ mf_full_data.graph_data | safe }};
+                var gDat3 = {{ mf_full_data.graph_data | safe }};
             </script>
             <script type="module" src="{{ url_for('static', filename='js/mfTrendsD3.js') }}"></script>
             <script type="module" src="{{ url_for('static', filename='js/mfTrendsD3Func.js') }}"></script>

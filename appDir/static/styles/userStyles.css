@@ -160,13 +160,6 @@ body{
     align-items: flex-end;
 }
 
-.show-modal{
-    opacity: 1;
-    visibility: visible;
-    transform: scale(1.0);
-    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
-}
-
 .nav-modal-close {
     text-align: center;
     cursor: pointer;
@@ -212,7 +205,7 @@ body{
 }
 
 #title-1{
-    width: clamp(70%, 800px, 80%);
+    width: clamp(700px, 80%, 800px);;
 }
 
 #txn-data-for{
@@ -262,7 +255,7 @@ body{
     background-color: white;
     border-radius: 10px;
     padding: 20px 0px;
-    width: clamp(70%, 800px, 80%);
+    width: clamp(700px, 80%, 800px);;
 }
 
 .summary-stats{
@@ -322,13 +315,6 @@ body{
     cursor: pointer;
     padding: 10px 0px;
     margin: 5px 0px;
-}
-
-.support-link:hover{
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.24), 0 1px 1px 0 rgba(0,0,0,0.19);
-}
-
-.support-link a{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -336,6 +322,10 @@ body{
     font-size: 15px;
     text-decoration: none;
     color: #337fd6;
+}
+
+.support-link:hover{
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.24), 0 1px 1px 0 rgba(0,0,0,0.19);
 }
 
 .d3-graph {
@@ -355,6 +345,70 @@ div.tooltip {
     border-radius: 8px;
     pointer-events: none;
     font-size: 0.7rem;
+    z-index: 10;
+}
+
+.modal{
+    position: fixed; /* Stay in place */
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+
+.modal-content-container{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 24rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.modal-close {
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    font-size: 20px;
+    background-color: white;
+    padding-top: 2px;
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    z-index: 1;
+    color: black;
+}
+  
+.modal-close:hover{
+    background-color: darkgray;
+}
+
+.modal-content {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+}
+
+.show-modal{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+#category-history{
+    margin: 10px 0px;
 }
 
 .banner{
