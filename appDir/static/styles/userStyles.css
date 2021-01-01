@@ -458,6 +458,56 @@ div.tooltip {
     margin: 0px 10%;
 }
 
+.add-btn{
+    background-color: #F5F7F9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: fixed;
+    border-radius: 100%;
+    height: 50px;
+    width: 50px;
+    bottom: 40px;
+    right: 40px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.add-btn:hover {
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
+}
+
+.modal-form{
+    margin-left: 10px;
+}
+
+.modal-form-div{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 15px;
+}
+
+#modal-form-div-label{
+    width: 35%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#modal-form-div-input{
+    width: 65%;
+}
+
+.add-txn-form-field{
+    width: 100%;
+    padding: 5px;
+}
+
 #level-2{
     margin-top: 30px;
 }

@@ -164,6 +164,15 @@
     
 </div>
 
+<div>
+    <div class="add-btn modal-trigger" id="add-txn-button">
+        <img src="{{ url_for('static', filename = 'icons/add-event.svg') }}" alt="Increase" width="22" height="22" align="middle">
+    </div>
+
+    {% include 'main/_addTxnModal.html' %}
+    <script src="{{ url_for('static', filename='js/addTxnButton.js') }}"></script>
+</div>
+
 <div class="level-container" id="level-2">
     <div class="data-type-title" id="title-2">
         <div style="font-size: 20px; font-weight: 400;">

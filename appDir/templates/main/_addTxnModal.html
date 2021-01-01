@@ -1,0 +1,62 @@
+<div class="modal" id="add-txn-modal">
+    <div class="modal-content-container" style="width: unset;">
+        <div class="modal-content" id="modal-content-1">
+            <div style="font-size: 18px; margin: 10px 0px;">Add New Transaction</div>
+            <form action="{{ url_for('main.addNewTxn') }}" method="POST" class="modal-form">
+                {{ form3.csrf_token }}
+                    <div class="modal-form-div">
+                        <div id="modal-form-div-label">
+                            {{ form3.date.label() }}
+                        </div>
+                        <div id="modal-form-div-input">
+                            {{ form3.date(class_="add-txn-form-field") }}
+                        </div>
+                    </div>
+
+                    <div class="modal-form-div">
+                        <div id="modal-form-div-label">
+                            {{ form3.amount.label() }}
+                        </div>
+                        <div id="modal-form-div-input">
+                            {{ form3.amount(type="number", step="0.01", class_="add-txn-form-field") }}
+                        </div>
+                    </div>
+
+                    <div class="modal-form-div">
+                        <div id="modal-form-div-label">
+                            {{ form3.txn_type.label() }}
+                        </div>
+                        <div id="modal-form-div-input">
+                            {{ form3.txn_type(class_="add-txn-form-field") }}
+                        </div>
+                    </div>
+
+                    <div class="modal-form-div">
+                        <div id="modal-form-div-label">
+                            {{ form3.category.label() }}
+                        </div>
+                        <div id="modal-form-div-input">
+                            {{ form3.category(class_="add-txn-form-field") }}
+                        </div>
+                    </div>
+
+                    {{ form3.description.label(style="font-size:15px") }}
+                    <br>
+                    <div style="width:100%;margin-top:10px;">
+                        {{ form3.description(style="height: 60px; width: 100%") }}
+                    </div>
+                    <br>
+
+                    <div style="width: 100%; display: flex; justify-content: center;">
+                        {{ form3.submit( class_ = "button submit-btn" ) }}
+                    </div>
+
+                    {% if form3.errors %}
+                        <script>toggleModal()</script>
+                        {{ form3.errors }}
+                    {% endif%}
+                </form>
+        </div>
+        <div class="modal-close" id="add-txn-modal-close">&times;</div>
+    </div>
+</div>
