@@ -209,7 +209,7 @@ body{
     justify-content: space-between;
 }
 
-#title-1{
+#title-1, #title-2{
     width: clamp(700px, 80%, 800px);;
 }
 

@@ -191,11 +191,18 @@
 </div>
 
 <div class="level-container" id="level-2">
+
     <div class="data-type-title" id="title-2">
         <div style="font-size: 20px; font-weight: 400;">
             Mutual Funds <span id="txn-data-for">(as on {{ mfp.loc[0, 'As On Date'] }})</span>
         </div>
+
+        <div style="margin-top: 10px; margin-bottom: 10px; font-size: 15px; display: flex; justify-content: center;">
+            Hide/Unhide Data: <input type="checkbox" onclick="hideUnhide(this)" style="margin-left:5px; margin-top:3px" />
+        </div>
     </div>
+
+    
 
     <div class="data-type-container">
         <div class="data-container">
@@ -205,7 +212,7 @@
                 <div class="stats" id="stats-21">
                     <div class="stat-title">Total Invested</div>
 
-                    <div class="stat-num" id="txn-income">₹ {{ total_invested }}</div>
+                    <div class="stat-num hide-unhide" id="txn-income">₹ {{ total_invested }}</div>
 
                     <div style="height: 24px"></div>
                 </div>
@@ -213,7 +220,7 @@
                 <div class="stats" id="stats-22">
                     <div class="stat-title">Current Value</div>
 
-                    <div class="stat-num" id="txn-expense">₹ {{ current_value }}</div>
+                    <div class="stat-num hide-unhide" id="txn-expense">₹ {{ current_value }}</div>
 
                     <div style="height: 24px"></div>
                 </div>
@@ -221,7 +228,7 @@
                 <div class="stats" id="stats-23">
                     <div class="stat-title">Total Returns</div>
 
-                    <div class="stat-num" id="txn-expense">₹ {{ current_value - total_invested }}</div>
+                    <div class="stat-num hide-unhide" id="txn-expense">₹ {{ current_value - total_invested }}</div>
 
                     <div class="stat-change">
                         {% set returns_per = (1 - (total_invested/current_value))*100 %}
@@ -235,7 +242,7 @@
                             {% endif %}
                         </div>
 
-                        <div class="change-num" id="mf-returns-percent"><span  class="change-number" style="color: {{ color }};">{{ '%0.1f'|format(returns_per|abs) }} %</span> MoM</div>
+                        <div class="change-num hide-unhide" id="mf-returns-percent"><span  class="change-number" style="color: {{ color }};">{{ '%0.1f'|format(returns_per|abs) }} %</span> MoM</div>
                     </div>
                 </div>
 
@@ -266,12 +273,12 @@
                         <div class="summary-stats" style="padding: 10px 0px;">
                             <div class="stats">
                                 <div class="stat-title" style="font-size: 13px;">Invested</div>
-                                <div class="mf-stat-num">₹ {{ ii['Total Investment']|int }}</div>
+                                <div class="mf-stat-num hide-unhide">₹ {{ ii['Total Investment']|int }}</div>
                             </div>
 
                             <div class="stats">
                                 <div class="stat-title" style="font-size: 13px;">Current Value</div>
-                                <div class="mf-stat-num">₹ {{ ii['Total Value']|int }}</div>
+                                <div class="mf-stat-num hide-unhide">₹ {{ ii['Total Value']|int }}</div>
                             </div>
 
                             <div class="stats">
@@ -283,7 +290,7 @@
                                     {% set color = "#C00000" %}
                                 {% endif %}
 
-                                <div class="mf-stat-num" style="color: {{ color }}; font-weight: 700;">₹ {{ ii['P&L']|int }} ( {{ ii['P&L %']|round(1, 'floor') }} % )</div>
+                                <div class="mf-stat-num hide-unhide" style="color: {{ color }}; font-weight: 700;">₹ {{ ii['P&L']|int }} ( {{ ii['P&L %']|round(1, 'floor') }} % )</div>
                             </div>
 
                             <div class="stats">
@@ -330,5 +337,7 @@
         </div>
     </div>
 </div>
+
+<script src="{{ url_for('static', filename='js/hideUnhide.js') }}"></script>
 
 {% endblock %}
