@@ -168,6 +168,15 @@ def getFullMFData(cUser):
     
     return dfDat
 
+def getPaginatePl(cUser, skip, limit):
+    return [
+      {"$match": {"email": cUser.email}},
+      {"$project": {"_id": "$_id", "date": "$date", "type": "$category_type", "name": "$category_name", "description": "$description", "amount": "$amount"}},
+      {"$sort": {"date": -1}},
+      {"$skip": skip},
+      {"$limit": limit}
+      ]
+
 
 
 

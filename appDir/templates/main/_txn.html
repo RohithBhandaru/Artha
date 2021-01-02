@@ -1,0 +1,41 @@
+<div style="text-align: unset;" class="txn-box" id="modDel-txn-button{{ txn._id }}">
+    <div class="txn-cat-comment">
+        <div id="txn-category">
+            {{ txn.name }}
+        </div>
+        <div id="txn-description" class="hide-unhide">
+            {{ txn.description }}
+        </div>
+    </div>
+
+    <div class="txn-amount">
+        ₹<span class="hide-unhide" style="margin-left: 3px;">{{ txn.amount }}</span>
+    </div>
+
+    <div class="txn-date">
+        {{ txn.date.strftime('%d %b\'%y') }}
+    </div>
+
+    <div class="txn-type">
+        {% if txn.type[0] == 'E' %}
+            <img src="/static/icons/MoneyOut.png">
+        {% else %}
+            <img src="/static/icons/MoneyIn.png">
+        {% endif %}
+    </div>
+</div>
+
+{% include 'main/_modifyTxnModal.html' %}
+
+<script>
+    modModals["{{ txn._id }}"] = document.querySelector("#modDel-txn-modal{{ txn._id }}");
+    modModalTriggers["{{ txn._id }}"] = document.querySelector("#modDel-txn-button{{ txn._id }}");
+    modModalCloses["{{ txn._id }}"] = document.querySelector("#modDel-txn-modal-close{{ txn._id }}");
+
+    function toggleModal() {
+        modModals["{{ txn._id }}"].classList.toggle("show-modal");
+    }
+
+    modModalTriggers["{{ txn._id }}"].addEventListener("click", toggleModal);
+    modModalCloses["{{ txn._id }}"].addEventListener("click", toggleModal);
+</script>

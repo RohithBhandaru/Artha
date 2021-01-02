@@ -1,0 +1,66 @@
+<div class="modal" id="modDel-txn-modal{{ txn._id }}">
+    <div class="modal-content-container" style="width: unset;">
+        <div class="modal-content">
+            <div style="font-size: 18px; margin: 10px 0px;">Update Transaction</div>
+            <form action="{{ url_for('main.modifyDeleteTxn', txn_id = txn._id) }}" method="POST" class="modal-form">
+                {{ form1.csrf_token(id="csrf_token" + count.value|string) }}
+
+                <div class="modal-form-div">
+                    <div id="modal-form-div-label">
+                        {{ form1.date.label() }}
+                    </div>
+                    <div id="modal-form-div-input">
+                        {{ form1.date(value = txn.date.strftime("%Y-%m-%d"), id="date" + count.value|string, class_="modify-txn-form-field") }}
+                    </div>
+                </div>
+
+                <div class="modal-form-div">
+                    <div id="modal-form-div-label">
+                        {{ form1.amount.label() }}
+                    </div>
+                    <div id="modal-form-div-input">
+                        {{ form1.amount(value = txn.amount, type="number", step="0.01", id="amount" + count.value|string, class_="modify-txn-form-field") }}
+                    </div>
+                </div>
+
+                <div class="modal-form-div">
+                    <div id="modal-form-div-label">
+                        {{ form1.txn_type.label() }}
+                    </div>
+                    <div id="modal-form-div-input">
+                        {% set x = form1.txn_type.process_data(txn.type) %}
+                        {{ form1.txn_type(id="txn_type" + count.value|string, class_="modify-txn-form-field") }}
+                    </div>
+                </div>
+
+                <div class="modal-form-div">
+                    <div id="modal-form-div-label">
+                        {{ form1.category.label() }}
+                    </div>
+                    <div id="modal-form-div-input">
+                        {% set y = form1.category.process_data(txn.name) %}
+                        {{ form1.category(id="category" + count.value|string, class_="modify-txn-form-field") }}
+                    </div>
+                </div>
+
+                {{ form1.description.label(style="font-size:15px") }}
+                <br>
+                <div style="width:100%;margin-top:10px;">
+                    {% set z = form1.description.process_data(txn.description) %}
+                    {{ form1.description(style="height:60px; width: 100%", id = "description" + count.value|string, class_="modify-txn-form-field") }}
+                </div>
+                <br>
+                <div style="width: 100%; display: flex; justify-content: space-around;">
+                    {{ form1.update(id="update" + count.value|string, style = "width:auto;", class="actionBtn addUpdate") }}
+                    {{ form1.delete(id="delete" + count.value|string, style = "width:auto;", class="actionBtn delete") }}
+                </div>
+
+                {% if form1.errors %}
+                    <script>toggleModal()</script>
+                    {{ form1.errors }}
+                {% endif%}
+            </form>
+        </div>
+        <div class="modal-close" id="modDel-txn-modal-close{{ txn._id }}">&times;</div>
+    </div>
+</div>

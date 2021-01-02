@@ -87,11 +87,11 @@ def getMonthlyTxnData(local_month_year, cUser):
 
 current_user = User.query.filter(User.email == "rohith@temp.com").all()[0]
 local_tz = pytz.timezone("Asia/Kolkata")
-local_month_year = local_tz.localize(dt.datetime(2020, 12, 1))
+local_month_year = local_tz.localize(dt.datetime(2021, 1, 1))
 
 # a = list(mclient["artha"]["transaction_data"].aggregate([{"$match": {"date": {"$gte": local_month_year, "$lt": local_month_year + relativedelta(months=+1)}}}]))
 
-# txn_E, txn_I, monthly_num = getMonthlyTxnData(local_month_year, current_user)
+txn_E, txn_I, monthly_num = getMonthlyTxnData(local_month_year, current_user)
 
 def getMFPortfolioPl(cUser):
     return [
@@ -184,7 +184,7 @@ def getCategoryHistoryData(category, cUser, local_tz_str):
     
     return dfDat
 
-data = getCategoryHistoryData("Bills", current_user, "Asia/Kolkata")
+# data = getCategoryHistoryData("Bills", current_user, "Asia/Kolkata")
 
 
 

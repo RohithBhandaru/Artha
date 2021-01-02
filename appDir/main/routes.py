@@ -11,6 +11,7 @@ import os
 import pytz
 import datetime as dt
 import dateutil.relativedelta as rdel
+from bson import ObjectId
 from flask import render_template, flash, request, jsonify, current_app, redirect, url_for
 from flask_login import current_user, login_required
 
@@ -80,6 +81,8 @@ def addNewTxn():
     inc_cat = helper.getCategoriesList("Income", current_user)
     form.category.choices = exp_cat + inc_cat
     
+    local_tz = pytz.timezone(current_user.timezone)
+    
     if request.method=="POST":
         date = form.date.data
         amount = form.amount.data
@@ -89,17 +92,106 @@ def addNewTxn():
         
         tempObj = {
             "email": current_user.email,
-            "date": dt.datetime(date.year, date.month, date.day),
+            "date": local_tz.localize(dt.datetime(date.year, date.month, date.day)).astimezone(UTC),
             "category_type": txn_type,
             "category_name": category,
             "description": description,
-            "amount": amount
+            "amount": int(amount)
         }
-        # mclient["artha"]["transaction_data"].insert(tempObj)
+        mclient["artha"]["transaction_data"].insert(tempObj)
         
         print("{0} - {1} - {2} - {3} - {4}".format(date, amount, txn_type, category, description))
         flash('New transaction added', category='success')
     return redirect(url_for('main.summary'))
+
+@main.route('/profile')
+@login_required
+def profile():    
+    form1 = ModalUpdateTxnForm()
+    form3 = ModalNewTxnForm()
+    
+    exp_cat = helper.getCategoriesList("Expense", current_user)
+    inc_cat = helper.getCategoriesList("Income", current_user)
+    form1.category.choices = exp_cat + inc_cat
+    form3.category.choices = exp_cat + inc_cat
+    
+    current_page = request.args.get('page', 1, type=int)
+    limit = current_app.config["TXNS_PER_PAGE"]
+    skip = (current_page - 1)*limit
+    txns = list(mclient["artha"]["transaction_data"].aggregate(helper.getPaginatePl(current_user, skip, limit)))
+    
+    try:
+        list(mclient["artha"]["transaction_data"].aggregate(helper.getPaginatePl(current_user, skip+1, limit)))
+        next_url = url_for('main.profile', page = current_page+1)
+    except:
+        next_url = None
+    
+    if current_page == 1:
+        prev_url = None
+    else:
+        prev_url = url_for('main.profile', page = current_page-1)
+    
+    
+    return render_template('main/profile.html', title='Profile', snavid = "snav-2", form1 = form1, form3 = form3, txns = txns, next_url = next_url, prev_url = prev_url)
+
+@main.route('/modifyDeleteTxn/<txn_id>', methods = ['GET', 'POST'])
+@login_required
+def modifyDeleteTxn(txn_id):
+    form = ModalUpdateTxnForm(request.form)
+    exp_cat = helper.getCategoriesList("Expense", current_user)
+    inc_cat = helper.getCategoriesList("Income", current_user)
+    form.category.choices = exp_cat + inc_cat
+    
+    local_tz = pytz.timezone(current_user.timezone)
+    
+    if request.method=="POST":
+        date = form.date.data
+        txn_type = form.txn_type.data
+        amount = form.amount.data
+        category = form.category.data
+        description = form.description.data
+                
+        if 'update' in request.form:
+            mclient["artha"]["transaction_data"].update_one({"_id": ObjectId(txn_id)}, 
+                                                            {"$set": {"date": local_tz.localize(dt.datetime(date.year, date.month, date.day)).astimezone(UTC),
+                                                            "category_type": txn_type,
+                                                            "category_name": category,
+                                                            "description": description,
+                                                            "amount": int(amount)}})
+        elif 'delete' in request.form:
+            mclient["artha"]["transaction_data"].delete_one({"_id": ObjectId(txn_id)})
+        
+        print("{0} - {1} - {2} - {3} - {4}".format(date, amount, txn_type, category, description))
+    
+    return redirect(url_for('main.profile'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

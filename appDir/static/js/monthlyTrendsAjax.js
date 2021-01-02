@@ -24,10 +24,10 @@ form.addEventListener("submit", async (e) => {
 
     response.text().then(function (value) {
         var a = JSON.parse(value);
-
+        
         document.getElementById("txn-data-for").innerHTML = "(for " + a["data_for"] + ")";
         document.getElementById("txn-income").innerHTML = "₹ " + Math.round(a["monthly_num"]["income"]);
-        document.getElementById("txn-income").innerHTML = "₹ " + Math.round(a["monthly_num"]["expense"]);
+        document.getElementById("txn-expense").innerHTML = "₹ " + Math.round(a["monthly_num"]["expense"]);
 
         if(a["monthly_num"]["income-mom-percent"] >= 0){
             var color = "#00C013";

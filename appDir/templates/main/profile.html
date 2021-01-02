@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <div>Name: {{ current_user.first_name }}</div>
+    <br>
+    <hr>
+    <div  style="font-size: 20px; font-weight: 400;">Historical Daily Transactions</div>
+    
+    <div class="txn-container">
+        <div class="txn-functions">
+            <div style="margin-top: 10px; margin-bottom: 10px; font-size: 15px; display: flex; justify-content: center;">
+                Hide/Unhide Data: <input type="checkbox" onclick="hideUnhide(this)" style="margin-left:5px; margin-top:3px" />
+            </div>
+        </div>
+        <script>
+            var modModals = [];
+            var modModalTriggers = [];
+            var modModalCloses = [];
+        </script>
+        {% set count = namespace(value=0) %}
+        {% for txn in txns %}
+            {% set count.value = count.value + 1 %}
+            {% include 'main/_txn.html' %}
+        {% endfor %}
+    </div>
+
+    <div class="paginator">
+        <div id="paginator-link">
+            {% if prev_url %}
+                <a href="{{ prev_url }}">Newer transactions</a>
+            {% endif %}
+        </div>
+        <div id="paginator-link">
+            {% if next_url %}
+                <a href="{{ next_url }}">Older transactions</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/txnColorChange.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/hideUnhide.js') }}"></script>
+{% endblock %}
