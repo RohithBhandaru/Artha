@@ -1,0 +1,80 @@
+{% extends "main/base.html" %} 
+
+{% block content %}
+
+<div class="upload-box-container">
+    <div>
+        <script>
+            var modals = [];
+            var modalCloses = [];
+        </script>
+        {% for message in get_flashed_messages(with_categories=True) %}
+            {% if message %}
+                <div class="flash-msg {{ message[0] }}" id="modal-{{ loop.index }}">
+                    <div style="padding: 10px;">{{ message[1] }}</div>
+                    <div class="flash-msg-modal-close" id="modal-close-{{ loop.index }}">&times;</div>
+                </div>
+            {% endif %}
+            <script>
+                modalCloses["{{ loop.index }}"] = document.querySelector("#modal-close-{{ loop.index }}");
+                modals["{{ loop.index }}"] = document.querySelector("#modal-{{ loop.index }}");
+    
+                function toggleFlashModal(){
+                    modals["{{ loop.index }}"].parentNode.removeChild(modals["{{ loop.index }}"]);
+                }
+    
+                modalCloses["{{ loop.index }}"].addEventListener("click", toggleFlashModal);
+    
+            </script>
+        {% endfor %}
+    </div>
+    
+    <div class="upload-box">
+        <div>Upload your latest financial data</div>
+        <form
+            id="upload-data"
+            method="POST"
+            action="{{ url_for('main.updateData') }}"
+            enctype="multipart/form-data"
+        >
+            {{ form1.csrf_token }}
+
+            <div class="upload-form-elem">
+                <div class="upload-form-elem-title">
+                    {{ form1.dailyFile.label() }}
+                </div>
+                <div class="upload-form-elem-field">
+                    {{ form1.dailyFile }}
+                </div>
+            </div>
+
+            <div class="upload-form-elem">
+                <div class="upload-form-elem-title">
+                    {{ form1.mfFile.label() }}
+                </div>
+                <div class="upload-form-elem-field">
+                    {{ form1.mfFile }}
+                </div>
+            </div>
+
+            <div class="upload-form-elem">
+                <div class="upload-form-elem-title">
+                    {{ form1.eqFile.label() }} 
+                </div>
+                <div class="upload-form-elem-field">
+                    {{ form1.eqFile }}
+                </div>
+            </div>
+
+            {% if form1.errors %} 
+                {{ form1.errors }} 
+            {% endif %}
+
+            <div class="upload-form-elem">
+                {{ form1.submit( class_ = "button submit-btn", style = "margin-left: unset" ) }}
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

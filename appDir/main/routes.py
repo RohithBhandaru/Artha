@@ -104,6 +104,39 @@ def addNewTxn():
         flash('New transaction added', category='success')
     return redirect(url_for('main.summary'))
 
+@main.route('/uploadData')
+@login_required
+def uploadData():
+    form1 = DataUploadForm()
+    form3 = ModalNewTxnForm()
+    
+    exp_cat = helper.getCategoriesList("Expense", current_user)
+    inc_cat = helper.getCategoriesList("Income", current_user)
+    form3.category.choices = exp_cat + inc_cat
+    
+    return render_template('main/upload.html', title = 'Upload Data', form1 = form1, form3 = form3, snavid = "snav-2")
+
+@main.route('/getUploadData', methods = ['GET', 'POST'])
+@login_required
+def updateData():
+    if request.method == 'POST':
+        f1 = request.files['dailyFile']
+        f2 = request.files['mfFile']
+        f3 = request.files['eqFile']
+        
+        if f1.filename != '':
+            f1.save(os.path.join('appDir/user-content', current_app.config["DAILY_TXN_FILE_NAME"]))
+            helper.updateDailyTxnData(current_user)
+            flash("Transactions data updated!", category="success")
+        if f2.filename != '':
+            f2.save(os.path.join('appDir/user-content', current_app.config["MF_TXN_FILE_NAME"]))
+            helper.updateMFTxnData(current_user)
+            flash("Mutual funds data updated!", category="success")
+        if f3.filename != '':
+            f3.save(os.path.join('appDir/user-content', current_app.config["EQ_TXN_FILE_NAME"]))
+        
+        return redirect(url_for('main.uploadData'))
+
 @main.route('/profile')
 @login_required
 def profile():    
@@ -132,7 +165,7 @@ def profile():
         prev_url = url_for('main.profile', page = current_page-1)
     
     
-    return render_template('main/profile.html', title='Profile', snavid = "snav-2", form1 = form1, form3 = form3, txns = txns, next_url = next_url, prev_url = prev_url)
+    return render_template('main/profile.html', title='Profile', snavid = "snav-3", form1 = form1, form3 = form3, txns = txns, next_url = next_url, prev_url = prev_url)
 
 @main.route('/modifyDeleteTxn/<txn_id>', methods = ['GET', 'POST'])
 @login_required

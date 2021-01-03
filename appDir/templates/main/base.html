@@ -38,13 +38,20 @@
                         </div>
 
                         <div class="snav-link" id="snav-2">
+                            <a href="{{ url_for('main.uploadData') }}">
+                                <img src="{{ url_for('static', filename = 'icons/upload.svg') }}" alt="Update" width="18" height="18" align="middle" style="margin: 0px 12px 0px 18px">
+                                Upload
+                            </a>
+                        </div>
+
+                        <div class="snav-link" id="snav-3">
                             <a href="{{ url_for('main.profile') }}">
                                 <img src="{{ url_for('static', filename = 'icons/user.svg') }}" alt="Profile" width="18" height="18" align="middle" style="margin: 0px 12px 0px 18px">
                                 Profile
                             </a>
                         </div>
 
-                        <div class="snav-link" id="snav-3">
+                        <div class="snav-link" id="snav-4">
                             <a href="{{ url_for('auth.logout') }}">
                                 <img src="{{ url_for('static', filename = 'icons/logout.svg') }}" alt="Log Out" width="18" height="18" align="middle" style="margin: 0px 10px 0px 20px">
                                 Log Out
