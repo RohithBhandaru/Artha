@@ -18,7 +18,7 @@ class Config(object):
     MONGO_URI = os.environ.get("MONGO_URI")
     
     MF_STATEMENT_PWD = 'Asia@1996'
-    DAILY_TXN_FILE_NAME = 'Daily - Txns Statement.xls'
+    DAILY_TXN_FILE_NAME = 'Daily - Txns Statement.xlsx'
     MF_TXN_FILE_NAME = 'MF - Txns Statement.pdf'
     EQ_TXN_FILE_NAME = 'Equity - Txns Statement.csv'
     

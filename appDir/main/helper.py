@@ -269,6 +269,7 @@ def updateMFTxnData(cUser):
                                       'Closing Unit Balance', 'NAV', 'Total Investment',
                                       'Total Value', 'Investing Since'])
     objects = []
+    mclient["artha"]["mf_data"].drop()
     
     for ii in folioData.keys():
         temp = folioData[ii]

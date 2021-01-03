@@ -10,7 +10,7 @@
         </script>
         {% for message in get_flashed_messages(with_categories=True) %}
             {% if message %}
-                <div class="flash-msg {{ message[0] }}" id="modal-{{ loop.index }}">
+                <div class="flash-msg {{ message[0] }}" id="modal-{{ loop.index }}" style="width: clamp(700px, 80%, 800px);">
                     <div style="padding: 10px;">{{ message[1] }}</div>
                     <div class="flash-msg-modal-close" id="modal-close-{{ loop.index }}">&times;</div>
                 </div>

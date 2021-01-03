@@ -496,7 +496,7 @@ div.tooltip {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: clamp(700px, 80%, 800px);
+    width: fit-content;
 }
 
 .flash-msg-modal-close{
@@ -740,7 +740,9 @@ th {
 .upload-box-container{
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin: 40px 0px;
 }
 
@@ -749,6 +751,7 @@ th {
     flex-direction: column;
     justify-content: space-evenly;
     padding: 20px;
+    margin: 10px 0px;
     border-radius: 5px;
     box-shadow: 10px 10px 20px #d0d2d4, -10px -10px 20px #ffffff;
 }
