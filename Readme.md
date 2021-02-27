@@ -10,15 +10,17 @@ The tool also provides analysis and trends in above mentioned financial transact
 
         https://github.com/RohithBhandaru/Artha.git
 
-2. Initiate SQLAlchemy DB
+2. Create a virtual environment and install requirements
+
+3. Initiate SQLAlchemy DB and run following commands
 
         flask db init
         flask db migrate -m "Initial migration"
         flask db upgrade
 
-3. Install MongoDB Community Edition
-4. Create "user-content" folder in appDir and place your historical daily transactions excel file and CAS pdf in this folder
-5. Daily transactions data is to be in the following format
+4. Install MongoDB Community Edition
+5. Create "user-content" folder in appDir and place your historical daily transactions excel file and CAS pdf in this folder
+6. Daily transactions data is to be in the following format
 <img width="1334" alt="Screenshot 2021-02-27 at 12 04 02 PM" src="https://user-images.githubusercontent.com/20087190/109378147-29974700-78f6-11eb-80de-470323ae8d46.png">
 
 7. Run the DataPop_MDB_DailyTxns.py and DataPop_MDB_MFTxns.py to populate MongoDB
