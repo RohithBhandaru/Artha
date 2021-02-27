@@ -55,7 +55,8 @@ class ResetPasswordForm(FlaskForm):
 
 
 class ChangePasswordForm(FlaskForm):
-    current_password = PasswordField("Current Password", validators=[DataRequired()])
+    current_password = PasswordField(
+        "Current Password", validators=[DataRequired()])
     password = PasswordField("New Password", validators=[DataRequired()])
     password2 = PasswordField(
         "Repeat New Password", validators=[DataRequired(), EqualTo("password")]

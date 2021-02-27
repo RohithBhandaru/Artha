@@ -24,25 +24,27 @@ from ..models import User
 ##################################
 ##################################
 ##################################
+
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.summary'))
-    
+
     form = LoginForm()
-    
+
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password', category="danger")
             return redirect(url_for('auth.login'))
-        
+
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('main.summary')
         return redirect(next_page)
-    
+
     return render_template('auth/login.html', title='Log In', form=form)
 
 
@@ -60,9 +62,9 @@ def logout():
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.summary'))
-    
+
     form = RegistrationForm()
-    
+
     if form.validate_on_submit():
         user = User(
             first_name=form.first_name.data,
@@ -74,7 +76,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        
+
         # token = user.generate_confirmation_token()
         # send_email(
         #     "[Artha] Confirm Your Account",
@@ -92,11 +94,12 @@ def register():
             "A confirmation email has been sent to you by email. This email is valid only for 1 hour.",
             category="success",
         )
-        
-        current_app.logger.info("New user registered - {0}".format(form.email.data))
-        
+
+        current_app.logger.info(
+            "New user registered - {0}".format(form.email.data))
+
         return redirect(url_for('auth.login'))
-    
+
     return render_template("auth/register.html", title="Register", form=form)
 
 
@@ -130,9 +133,9 @@ def resendConfirmation():
             "auth/email/confirmAccount.html", user=current_user, token=token
         ),
     )
-    flash("A new confirmation email has been sent to you by email.", category="success")
+    flash("A new confirmation email has been sent to you by email.",
+          category="success")
     return render_template("auth/unconfirmedAccount.html", user=current_user)
-
 
 
 ##################################
@@ -146,7 +149,7 @@ def resetPasswordRequest():
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data.lower()).first()
-        
+
         if user:
             token = user.generate_reset_token()
             send_email(
@@ -205,7 +208,8 @@ def changePassword():
             db.session.commit()
             flash("Password successfully changed", category="success")
             current_app.logger.info(
-                "{0} - Password changed".format("[User - " + current_user.email + "]")
+                "{0} - Password changed".format(
+                    "[User - " + current_user.email + "]")
             )
         else:
             flash("Invalid password.", category="danger")

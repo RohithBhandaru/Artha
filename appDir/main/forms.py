@@ -13,6 +13,7 @@ from wtforms.fields.html5 import DateField
 from wtforms import SubmitField, SelectField, DecimalField, TextAreaField
 from wtforms.validators import DataRequired
 
+
 class MonthSelectForm(FlaskForm):
     selectMonth = DateField('Select Month', format='%Y-%m-%d')
     submit = SubmitField('Submit')

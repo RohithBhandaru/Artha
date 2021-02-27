@@ -7,6 +7,7 @@ Created on Tue Dec 29 14:37:11 2020
 """
 
 
+from appDir import models
 import os
 import logging
 from flask import Flask
@@ -78,6 +79,3 @@ def create_app(config_name):
         app.logger.setLevel(logging.INFO)
 
     return app
-
-
-from appDir import models

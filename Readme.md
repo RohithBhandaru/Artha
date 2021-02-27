@@ -25,5 +25,5 @@ The tool also provides analysis and trends in above mentioned financial transact
 
 7. Run the DataPop_MDB_DailyTxns.py and DataPop_MDB_MFTxns.py to populate MongoDB
 8. Run the flask application and register yourself as a user
-9. Voila! You'll a screen like this 
+9. Voila! You'll see a screen like this 
 <img width="1381" alt="Screenshot 2021-02-27 at 12 21 13 PM" src="https://user-images.githubusercontent.com/20087190/109378165-53506e00-78f6-11eb-92a8-49098b96d722.png">

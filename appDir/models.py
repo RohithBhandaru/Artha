@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     confirmed_on = db.Column(db.DateTime)
     user_type = db.Column(db.String(128), index=True)
     # Types of users: Customer, Admin
-    timezone = db.Column(db.String(64), index = True)
+    timezone = db.Column(db.String(64), index=True)
 
     @staticmethod
     def make_unique_username(username):
@@ -131,7 +131,7 @@ class MFPortfolio(db.Model):
     nav = db.Column(db.Float(128))
     total_investment = db.Column(db.Float(128))
     investing_since = db.Column(db.DateTime, default=dt.datetime.utcnow())
-    
+
     def __repr__(self):
         return '<Fund {}>'.format(self.fund_name)
 

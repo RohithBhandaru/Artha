@@ -16,7 +16,7 @@ txnDat = pd.read_excel('appDir/user-content/Daily Txns.xlsx', None)
 temp = pd.DataFrame()
 
 for ii in txnDat.keys():
-    temp = temp.append(txnDat[ii].iloc[7:-3, 2:], ignore_index = True)
+    temp = temp.append(txnDat[ii].iloc[7:-3, 2:], ignore_index=True)
 
 temp.columns = ['Date', 'Category Type', 'Category Name', 'Note', 'Amount']
 txnDat = temp.copy()
@@ -29,7 +29,7 @@ client = MongoClient('mongodb://localhost:27017')
 db = client["artha"]
 collection = db["transaction_data"]
 
-#Upto 30 Dec 2020 have been updated
+# Upto 30 Dec 2020 have been updated
 buffer = []
 for ii in range(txnDat.shape[0]):
     tempObj = {
@@ -44,4 +44,3 @@ for ii in range(txnDat.shape[0]):
 
 collection.insert_many(buffer)
 buffer = []
-
