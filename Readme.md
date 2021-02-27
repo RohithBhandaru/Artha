@@ -19,6 +19,9 @@ The tool also provides analysis and trends in above mentioned financial transact
 3. Install MongoDB Community Edition
 4. Create "user-content" folder in appDir and place your historical daily transactions excel file and CAS pdf in this folder
 5. Daily transactions data is to be in the following format
-6. Run the DataPop_MDB_DailyTxns.py and DataPop_MDB_MFTxns.py to populate MongoDB
-7. Run the flask application and register yourself as a user
-8. Voila! You'll a screen like this 
+<img width="1334" alt="Screenshot 2021-02-27 at 12 04 02 PM" src="https://user-images.githubusercontent.com/20087190/109378147-29974700-78f6-11eb-80de-470323ae8d46.png">
+
+7. Run the DataPop_MDB_DailyTxns.py and DataPop_MDB_MFTxns.py to populate MongoDB
+8. Run the flask application and register yourself as a user
+9. Voila! You'll a screen like this 
+<img width="1381" alt="Screenshot 2021-02-27 at 12 21 13 PM" src="https://user-images.githubusercontent.com/20087190/109378165-53506e00-78f6-11eb-92a8-49098b96d722.png">
