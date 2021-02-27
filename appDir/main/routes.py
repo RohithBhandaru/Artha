@@ -142,6 +142,7 @@ def updateData():
 def profile():    
     form1 = ModalUpdateTxnForm()
     form3 = ModalNewTxnForm()
+    local_tz = pytz.timezone(current_user.timezone)
     
     exp_cat = helper.getCategoriesList("Expense", current_user)
     inc_cat = helper.getCategoriesList("Income", current_user)
@@ -152,6 +153,8 @@ def profile():
     limit = current_app.config["TXNS_PER_PAGE"]
     skip = (current_page - 1)*limit
     txns = list(mclient["artha"]["transaction_data"].aggregate(helper.getPaginatePl(current_user, skip, limit)))
+    for ii in txns:
+        ii["date"] = UTC.localize(ii["date"]).astimezone(local_tz)
     
     try:
         list(mclient["artha"]["transaction_data"].aggregate(helper.getPaginatePl(current_user, skip+1, limit)))

@@ -50,7 +50,7 @@
                 <div class="stats" id="stats-11">
                     <div class="stat-title">Income</div>
 
-                    <div class="stat-num" id="txn-income">₹ {{ monthly_num["income"] | int }}</div>
+                    <div class="stat-num hide-unhide" id="txn-income">₹ {{ monthly_num["income"] | int }}</div>
 
                     <div class="stat-change">
                         {% set income_per = '%0.1f'|format(monthly_num["income-mom-percent"]|abs) %}
@@ -71,7 +71,7 @@
                 <div class="stats" id="stats-12">
                     <div class="stat-title">Expense</div>
 
-                    <div class="stat-num" id="txn-expense">₹ {{ monthly_num["expense"] | int }}</div>
+                    <div class="stat-num hide-unhide" id="txn-expense">₹ {{ monthly_num["expense"] | int }}</div>
 
                     <div class="stat-change">
                         {% set expense_per = '%0.1f'|format(monthly_num["expense-mom-percent"]|abs) %}

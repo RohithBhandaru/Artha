@@ -48,7 +48,7 @@ def checkNaN(num):
         return num
 
 pdfName = r'appDir/user-content/MF Txns.pdf'
-df = read_pdf(pdfName, columns = [70.5,333,375,433,492], stream=True, guess = False, pages = 'all', password = 'Asia@1996')
+df = read_pdf(pdfName, columns = [70.5,333,375,433,492], stream=True, guess = False, pages = 'all', password = '*******')
 
 #%%
 txnsDf = pd.DataFrame()

@@ -124,14 +124,15 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 10px;
+    padding: 30px 4%;
 }
 
 #topnav-title{
     display: flex;
     font-size: 24px;
     align-items: center;
-    width: 90%;
+    width: -webkit-fill-available; /*For webkit based browsers*/
+    width: -moz-fill-available;    /*For mozilla based browsers*/
     justify-content: center;
 }
 
