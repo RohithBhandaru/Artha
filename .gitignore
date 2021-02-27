@@ -33,4 +33,4 @@ logs
 /appDir/**/moment.min.js
 /appDir/**/moment-timezone-with-data-1970-2030.min.js
 /appDir/static/.webassets-cache
-testHelper.py
+/testHelper.py
